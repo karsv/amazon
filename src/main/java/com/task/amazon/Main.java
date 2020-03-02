@@ -1,9 +1,9 @@
 package com.task.amazon;
 
-import java.util.List;
-
 import com.task.amazon.utils.ReaderService;
 import com.task.amazon.utils.impl.FileReaderService;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {

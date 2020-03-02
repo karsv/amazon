@@ -1,5 +1,6 @@
 package com.task.amazon.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,5 +19,6 @@ public class AmazonEntity {
     private String productId;
     private String userId;
     private String profileName;
+    @Column(columnDefinition = "TEXT")
     private String text;
 }
