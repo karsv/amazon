@@ -12,9 +12,9 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "entities")
-public class AmazonEntity {
+public class AmazonReviewEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String productId;
     private String userId;

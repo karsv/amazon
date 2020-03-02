@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class FileReaderService implements ReaderService {
 
     @Override
-    public List<String> parse(String path) {
+    public List<String> parseDataToStrings(String path) {
         try {
             return Files.readAllLines(Path.of(path));
         } catch (IOException e) {
