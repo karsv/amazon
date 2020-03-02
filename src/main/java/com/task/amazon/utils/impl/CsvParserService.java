@@ -6,6 +6,9 @@ import com.task.amazon.utils.ParseService;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class CsvParserService implements ParseService {
     @Override
     public List<AmazonReviewEntity> parseStringsToAmazonReviewEntities(List<String> strings) {
