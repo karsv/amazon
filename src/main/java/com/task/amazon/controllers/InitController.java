@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,7 +22,10 @@ public class InitController {
 
     private final DataConfig dataConfig;
 
-    public InitController(CsvParserService csvParserService, FileReaderService fileReaderService, AmazonEntityRepository amazonEntityRepository, DataConfig dataConfig) {
+    public InitController(CsvParserService csvParserService,
+                          FileReaderService fileReaderService,
+                          AmazonEntityRepository amazonEntityRepository,
+                          DataConfig dataConfig) {
         this.csvParserService = csvParserService;
         this.fileReaderService = fileReaderService;
         this.amazonEntityRepository = amazonEntityRepository;
