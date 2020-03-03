@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.springframework.stereotype.Service;
 
@@ -26,8 +25,11 @@ public class WordCounterServiceMapImpl implements WordCounterService {
             }
         }
         map.remove("");
-        Map<String, Integer> sorted = map.entrySet().parallelStream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(1000)
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+        Map<String, Integer> sorted = map.entrySet().parallelStream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .limit(1000)
+                .collect(toMap(Map.Entry::getKey,
+                        Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
         return sorted;
     }
 }

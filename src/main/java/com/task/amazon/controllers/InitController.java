@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class InitController {
-    private static final String  PATH = "/home/karsv/Downloads/Reviews.csv";
+    private static final String PATH = "/home/karsv/Downloads/Reviews.csv";
 
     @Autowired
     private CsvParserService csvParserService;
@@ -26,7 +26,7 @@ public class InitController {
     private AmazonEntityRepository amazonEntityRepository;
 
     @PostConstruct
-    private void postConstruct(){
+    private void postConstruct() {
         List<AmazonReviewEntity> reviewEntityList =
                 csvParserService.parseStringsToAmazonReviewEntities(
                         fileReaderService.parseDataToStrings(PATH));
