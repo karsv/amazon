@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class InitController {
-    private static final String FILE_NAME = "src/main/resources/data.csv";
+    private static final String FILE_NAME = "/src/main/resources/dummy.csv";
 
     private final CsvParserService csvParserService;
 
