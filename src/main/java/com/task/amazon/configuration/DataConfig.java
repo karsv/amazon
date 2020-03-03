@@ -16,4 +16,9 @@ public class DataConfig {
     public String getDataPath() {
         return environment.getProperty("data.path");
     }
+
+    @Bean
+    public String getDataUrl() {
+        return environment.getProperty("data.url");
+    }
 }
