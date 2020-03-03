@@ -21,4 +21,9 @@ public class DataConfig {
     public String getDataUrl() {
         return environment.getProperty("data.url");
     }
+
+    @Bean
+    public String getNewPathForDataFile() {
+        return environment.getProperty("data.newpath");
+    }
 }

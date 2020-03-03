@@ -2,17 +2,11 @@ package com.task.amazon.controllers;
 
 import com.task.amazon.configuration.DataConfig;
 import com.task.amazon.entities.AmazonReviewEntity;
-import com.task.amazon.exceptions.DataProcessingException;
 import com.task.amazon.repository.AmazonEntityRepository;
 import com.task.amazon.utils.impl.CsvParserService;
 import com.task.amazon.utils.impl.FileReaderService;
+import com.task.amazon.utils.impl.UrlFileGetter;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -33,14 +27,17 @@ public class InitController {
 
     private final DataConfig dataConfig;
 
+    public final UrlFileGetter urlFileGetter;
+
     public InitController(CsvParserService csvParserService,
                           FileReaderService fileReaderService,
                           AmazonEntityRepository amazonEntityRepository,
-                          DataConfig dataConfig) {
+                          DataConfig dataConfig, UrlFileGetter urlFileGetter) {
         this.csvParserService = csvParserService;
         this.fileReaderService = fileReaderService;
         this.amazonEntityRepository = amazonEntityRepository;
         this.dataConfig = dataConfig;
+        this.urlFileGetter = urlFileGetter;
     }
 
     @PostConstruct
@@ -49,17 +46,9 @@ public class InitController {
         if (Files.isReadable(Path.of(dataConfig.getDataPath()))) {
             path = dataConfig.getDataPath();
         } else {
-            try {
-                ReadableByteChannel readableByteChannel = Channels
-                        .newChannel(new URL(dataConfig.getDataUrl()).openStream());
-                FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME);
-                FileChannel fileChannel = fileOutputStream.getChannel();
-                fileOutputStream.getChannel()
-                        .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-                path = FILE_NAME;
-            } catch (IOException e) {
-                throw new DataProcessingException("Can't get data from url!", e);
-            }
+            urlFileGetter.getFileFromUrl(dataConfig.getDataUrl(),
+                    dataConfig.getNewPathForDataFile());
+            path = dataConfig.getNewPathForDataFile();
         }
         List<AmazonReviewEntity> reviewEntityList =
                 csvParserService.parseStringsToAmazonReviewEntities(
