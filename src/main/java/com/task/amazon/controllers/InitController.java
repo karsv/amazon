@@ -50,7 +50,7 @@ public class InitController {
         }
         List<AmazonReviewEntity> reviewEntityList =
                 csvParserService.parseStringsToAmazonReviewEntities(
-                        fileReaderService.parseDataToStrings(dataConfig.getDataPath()));
+                        fileReaderService.parseDataToStrings(path));
         amazonEntityRepository.saveAll(reviewEntityList);
     }
 }
