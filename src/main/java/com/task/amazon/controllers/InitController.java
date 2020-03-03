@@ -1,5 +1,6 @@
 package com.task.amazon.controllers;
 
+import com.task.amazon.configuration.DataConfig;
 import com.task.amazon.entities.AmazonReviewEntity;
 import com.task.amazon.repository.AmazonEntityRepository;
 import com.task.amazon.utils.impl.CsvParserService;
@@ -14,22 +15,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class InitController {
-    private static final String PATH = "/home/karsv/Downloads/Reviews.csv";
+    private final CsvParserService csvParserService;
 
-    @Autowired
-    private CsvParserService csvParserService;
+    private final FileReaderService fileReaderService;
 
-    @Autowired
-    private FileReaderService fileReaderService;
+    private final AmazonEntityRepository amazonEntityRepository;
 
-    @Autowired
-    private AmazonEntityRepository amazonEntityRepository;
+    private final DataConfig dataConfig;
+
+    public InitController(CsvParserService csvParserService, FileReaderService fileReaderService, AmazonEntityRepository amazonEntityRepository, DataConfig dataConfig) {
+        this.csvParserService = csvParserService;
+        this.fileReaderService = fileReaderService;
+        this.amazonEntityRepository = amazonEntityRepository;
+        this.dataConfig = dataConfig;
+    }
 
     @PostConstruct
     private void postConstruct() {
         List<AmazonReviewEntity> reviewEntityList =
                 csvParserService.parseStringsToAmazonReviewEntities(
-                        fileReaderService.parseDataToStrings(PATH));
+                        fileReaderService.parseDataToStrings(dataConfig.getDataPath()));
         amazonEntityRepository.saveAll(reviewEntityList);
     }
 }
