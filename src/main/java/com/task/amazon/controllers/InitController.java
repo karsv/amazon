@@ -38,9 +38,8 @@ public class InitController {
         String path = dataPath;
 
         if (!Files.isReadable(Path.of(dataPath))) {
-            urlFileGetter.getFileFromUrl(urlPath,
-                    newDataPath);
-            path = dataPath;
+            urlFileGetter.getFileFromUrl(urlPath, newDataPath);
+            path = newDataPath;
         }
 
         amazonEntityRepository.saveAll(csvReader.parseCsvFile(path));
