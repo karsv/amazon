@@ -1,35 +1,50 @@
 package com.task.amazon.utils.impl;
 
-import static java.util.stream.Collectors.toMap;
-
+import com.task.amazon.dto.WordCommentCountDto;
+import com.task.amazon.entities.AmazonProductComments;
 import com.task.amazon.utils.WordCounterService;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class WordCounterServiceMapImpl implements WordCounterService {
     @Override
-    public Map<String, Integer> countWordsInString(String string) {
+    public List<WordCommentCountDto> countWordsInString(
+            List<AmazonProductComments> productComments) {
         Map<String, Integer> map = new HashMap<>();
-        String[] words = string.replaceAll("[^a-z]", ",").split(",");
-        for (String s : words) {
-            if (map.containsKey(s)) {
-                map.put(s, map.get(s) + 1);
-            } else {
-                map.put(s, 1);
+        for (AmazonProductComments s : productComments) {
+            String[] words = s.getText()
+                    .toLowerCase()
+                    .replaceAll("[^a-z]", ",")
+                    .split(",");
+            for (String word : words) {
+                if (map.containsKey(word)) {
+                    map.put(word, map.get(word) + 1);
+                } else {
+                    map.put(word, 1);
+                }
             }
         }
         map.remove("");
-        Map<String, Integer> sorted = map.entrySet().parallelStream()
+        return convertMapToListDto(map);
+    }
+
+    private List<WordCommentCountDto> convertMapToListDto(Map<String, Integer> map) {
+        return map.entrySet().stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                 .limit(1000)
-                .collect(toMap(Map.Entry::getKey,
-                        Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
-        return sorted;
+                .map(word -> {
+                    WordCommentCountDto wordCommentCountDto = new WordCommentCountDto();
+                    wordCommentCountDto.setWord(word.getKey());
+                    wordCommentCountDto.setCount(word.getValue());
+                    return wordCommentCountDto;
+                })
+                .collect(Collectors.toList());
     }
 }

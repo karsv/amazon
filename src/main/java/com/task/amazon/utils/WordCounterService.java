@@ -1,7 +1,10 @@
 package com.task.amazon.utils;
 
-import java.util.Map;
+import com.task.amazon.dto.WordCommentCountDto;
+import com.task.amazon.entities.AmazonProductComments;
+
+import java.util.List;
 
 public interface WordCounterService {
-    Map<String, Integer> countWordsInString(String string);
+    List<WordCommentCountDto> countWordsInString(List<AmazonProductComments> productComments);
 }

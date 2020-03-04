@@ -1,8 +1,8 @@
 package com.task.amazon.service;
 
+import com.task.amazon.dto.WordCommentCountDto;
 import com.task.amazon.entities.AmazonBestUsersEntity;
 import com.task.amazon.entities.AmazonMostCommentedProduct;
-import com.task.amazon.entities.AmazonProductComments;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface AmazonReviewService {
-    List<AmazonProductComments> getAllComments();
+    List<WordCommentCountDto> getPopularWordsFromComment(int page, int pageSize);
 
     List<AmazonMostCommentedProduct> findMostCommentProducts(PageRequest pageRequest);
 

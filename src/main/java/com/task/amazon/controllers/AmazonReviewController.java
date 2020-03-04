@@ -1,13 +1,11 @@
 package com.task.amazon.controllers;
 
+import com.task.amazon.dto.WordCommentCountDto;
 import com.task.amazon.entities.AmazonBestUsersEntity;
 import com.task.amazon.entities.AmazonMostCommentedProduct;
-import com.task.amazon.entities.AmazonProductComments;
 import com.task.amazon.service.AmazonReviewService;
-import com.task.amazon.utils.impl.WordCounterServiceMapImpl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,9 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AmazonReviewController {
     @Autowired
     private AmazonReviewService amazonReviewService;
-
-    @Autowired
-    private WordCounterServiceMapImpl wordCounterServiceMap;
 
     @GetMapping("/users")
     public List<AmazonBestUsersEntity> getBestUsers(
@@ -45,14 +40,9 @@ public class AmazonReviewController {
     }
 
     @GetMapping("/words")
-    public Map<String, Integer> getPopularWords() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (AmazonProductComments apc : amazonReviewService.getAllComments()) {
-            stringBuilder.append(apc.getText().toLowerCase());
-        }
-        Map<String, Integer> map =
-                wordCounterServiceMap.countWordsInString(stringBuilder.toString());
-        return map;
+    public List<WordCommentCountDto> getPopularWords(
+            @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(name = "limit", required = false, defaultValue = "50") int limit) {
+        return amazonReviewService.getPopularWordsFromComment(page, limit);
     }
-
 }
