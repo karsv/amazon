@@ -28,16 +28,19 @@ public class AmazonReviewController {
     private WordCounterServiceMapImpl wordCounterServiceMap;
 
     @GetMapping("/users")
-    public List<AmazonBestUsersEntity> getBestUsers(@RequestParam(name = "page") int page) {
+    public List<AmazonBestUsersEntity> getBestUsers(
+            @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(name = "limit", required = false, defaultValue = "50") int limit) {
         return amazonReviewService.findActiveUsers(PageRequest
-                .of(page, 100, JpaSort.unsafe(Sort.Direction.DESC, "COUNT(a.userId)")));
+                .of(page, limit, JpaSort.unsafe(Sort.Direction.DESC, "COUNT(a.userId)")));
     }
 
     @GetMapping(value = "/products")
     public List<AmazonMostCommentedProduct> getMostCommentedProducts(
-            @RequestParam(name = "page") int page) {
+            @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(name = "limit", required = false, defaultValue = "50") int limit) {
         return amazonReviewService.findMostCommentProducts(PageRequest
-                .of(page, 100,
+                .of(page, limit,
                         JpaSort.unsafe(Sort.Direction.DESC, "COUNT(a.productId)")));
     }
 
