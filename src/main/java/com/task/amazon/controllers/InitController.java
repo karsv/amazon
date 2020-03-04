@@ -40,10 +40,8 @@ public class InitController {
 
     @PostConstruct
     private void postConstruct() {
-        String path;
-        if (Files.isReadable(Path.of(dataConfig.getDataPath()))) {
-            path = dataConfig.getDataPath();
-        } else {
+        String path = dataConfig.getDataPath();
+        if (!Files.isReadable(Path.of(dataConfig.getDataPath()))) {
             urlFileGetter.getFileFromUrl(dataConfig.getDataUrl(),
                     dataConfig.getNewPathForDataFile());
             path = dataConfig.getNewPathForDataFile();
