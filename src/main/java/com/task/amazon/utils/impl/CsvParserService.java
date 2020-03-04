@@ -21,7 +21,14 @@ public class CsvParserService implements ParseService {
             amazonReviewEntity.setProductId(s[1]);
             amazonReviewEntity.setUserId(s[2]);
             amazonReviewEntity.setProfileName(s[3]);
-            amazonReviewEntity.setText(s[9]);
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 9; j < s.length; j++) {
+                stringBuilder.append(s[j]);
+                if(j != s.length -1){
+                    stringBuilder.append(",");
+                }
+            }
+            amazonReviewEntity.setText(stringBuilder.toString());
             list.add(amazonReviewEntity);
         }
         return list;
