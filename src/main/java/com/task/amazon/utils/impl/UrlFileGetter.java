@@ -17,8 +17,7 @@ public class UrlFileGetter {
         try {
             ReadableByteChannel readableByteChannel = Channels
                     .newChannel(new URL(url).openStream());
-            FileOutputStream fileOutputStream = null;
-            fileOutputStream = new FileOutputStream(pathForDownloadedFile);
+            FileOutputStream fileOutputStream = new FileOutputStream(pathForDownloadedFile);
             FileChannel fileChannel = fileOutputStream.getChannel();
             fileOutputStream.getChannel()
                     .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);

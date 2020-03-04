@@ -1,43 +1,46 @@
 package com.task.amazon.controllers;
 
-import com.task.amazon.configuration.DataConfig;
 import com.task.amazon.repository.AmazonEntityRepository;
 import com.task.amazon.utils.CsvReaderService;
 import com.task.amazon.utils.impl.UrlFileGetter;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class InitController {
     private final AmazonEntityRepository amazonEntityRepository;
-    private final DataConfig dataConfig;
     private final UrlFileGetter urlFileGetter;
+    private final CsvReaderService csvReader;
+
+    @Value("${data.path}")
+    private String dataPath;
+    @Value("${data.url}")
+    private String urlPath;
+    @Value("${data.newpath}")
+    private String newDataPath;
 
     public InitController(AmazonEntityRepository amazonEntityRepository,
-                          DataConfig dataConfig, UrlFileGetter urlFileGetter,
+                          UrlFileGetter urlFileGetter,
                           CsvReaderService csvReader) {
         this.amazonEntityRepository = amazonEntityRepository;
-        this.dataConfig = dataConfig;
         this.urlFileGetter = urlFileGetter;
         this.csvReader = csvReader;
     }
 
-    private final CsvReaderService csvReader;
-
     @PostConstruct
-    private void postConstruct() throws IOException {
-        String path = dataConfig.getDataPath();
+    private void postConstruct() {
+        String path = dataPath;
 
-        if (!Files.isReadable(Path.of(dataConfig.getDataPath()))) {
-            urlFileGetter.getFileFromUrl(dataConfig.getDataUrl(),
-                    dataConfig.getNewPathForDataFile());
-            path = dataConfig.getNewPathForDataFile();
+        if (!Files.isReadable(Path.of(dataPath))) {
+            urlFileGetter.getFileFromUrl(urlPath,
+                    newDataPath);
+            path = dataPath;
         }
 
         amazonEntityRepository.saveAll(csvReader.parseCsvFile(path));
