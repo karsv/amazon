@@ -3,7 +3,7 @@ package com.task.amazon.controllers;
 import com.task.amazon.entities.AmazonBestUsersEntity;
 import com.task.amazon.entities.AmazonMostCommentedProduct;
 import com.task.amazon.entities.AmazonProductComments;
-import com.task.amazon.repository.AmazonEntityRepository;
+import com.task.amazon.service.AmazonReviewService;
 import com.task.amazon.utils.impl.WordCounterServiceMapImpl;
 
 import java.util.List;
@@ -22,21 +22,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/amazon")
 public class AmazonReviewController {
     @Autowired
-    private AmazonEntityRepository amazonEntityRepository;
+    private AmazonReviewService amazonReviewService;
 
     @Autowired
     private WordCounterServiceMapImpl wordCounterServiceMap;
 
     @GetMapping("/users")
     public List<AmazonBestUsersEntity> getBestUsers(@RequestParam(name = "page") int page) {
-        return amazonEntityRepository.findActiveUsers(PageRequest
+        return amazonReviewService.findActiveUsers(PageRequest
                 .of(page, 100, JpaSort.unsafe(Sort.Direction.DESC, "COUNT(a.userId)")));
     }
 
     @GetMapping(value = "/products")
     public List<AmazonMostCommentedProduct> getMostCommentedProducts(
             @RequestParam(name = "page") int page) {
-        return amazonEntityRepository.findMostCommentProducts(PageRequest
+        return amazonReviewService.findMostCommentProducts(PageRequest
                 .of(page, 100,
                         JpaSort.unsafe(Sort.Direction.DESC, "COUNT(a.productId)")));
     }
@@ -44,7 +44,7 @@ public class AmazonReviewController {
     @GetMapping("/words")
     public Map<String, Integer> getPopularWords() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (AmazonProductComments apc : amazonEntityRepository.getAllComments()) {
+        for (AmazonProductComments apc : amazonReviewService.getAllComments()) {
             stringBuilder.append(apc.getText().toLowerCase());
         }
         Map<String, Integer> map =
