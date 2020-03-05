@@ -1,6 +1,11 @@
 package com.task.amazon.controllers;
 
+import com.task.amazon.entities.Role;
+import com.task.amazon.entities.User;
 import com.task.amazon.repository.AmazonEntityRepository;
+import com.task.amazon.service.AmazonReviewService;
+import com.task.amazon.service.RoleService;
+import com.task.amazon.service.UserService;
 import com.task.amazon.utils.CsvReaderService;
 import com.task.amazon.utils.impl.UrlFileGetter;
 
@@ -15,8 +20,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class InitController {
     private final AmazonEntityRepository amazonEntityRepository;
-    private final UrlFileGetter urlFileGetter;
     private final CsvReaderService csvReader;
+    private final RoleService roleService;
+    private final UrlFileGetter urlFileGetter;
+    private final UserService userService;
+    private final AmazonReviewService amazonReviewService;
 
     @Value("${data.path}")
     private String dataPath;
@@ -27,10 +35,15 @@ public class InitController {
 
     public InitController(AmazonEntityRepository amazonEntityRepository,
                           UrlFileGetter urlFileGetter,
-                          CsvReaderService csvReader) {
+                          CsvReaderService csvReader, RoleService roleService,
+                          UserService userService,
+                          AmazonReviewService amazonReviewService) {
         this.amazonEntityRepository = amazonEntityRepository;
         this.urlFileGetter = urlFileGetter;
         this.csvReader = csvReader;
+        this.roleService = roleService;
+        this.userService = userService;
+        this.amazonReviewService = amazonReviewService;
     }
 
     @PostConstruct
@@ -43,5 +56,20 @@ public class InitController {
         }
 
         amazonEntityRepository.saveAll(csvReader.parseCsvFile(path));
+
+        amazonReviewService.countWordsInComments();
+
+        Role adminRole = new Role();
+        adminRole.setName("ADMIN");
+        roleService.add(adminRole);
+        Role userRole = new Role();
+        userRole.setName("USER");
+        roleService.add(userRole);
+
+        User admin = new User();
+        admin.setEmail("admin@admin.com");
+        admin.setPassword("123");
+        admin.setRoles(adminRole);
+        userService.add(admin);
     }
 }

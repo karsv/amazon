@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class WordCommentCountDto {
     private String word;
-    private Integer count;
+    private Long count;
 }

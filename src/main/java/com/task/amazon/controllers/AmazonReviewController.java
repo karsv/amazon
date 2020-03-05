@@ -4,6 +4,7 @@ import com.task.amazon.dto.WordCommentCountDto;
 import com.task.amazon.entities.AmazonBestUsersEntity;
 import com.task.amazon.entities.AmazonMostCommentedProduct;
 import com.task.amazon.service.AmazonReviewService;
+import com.task.amazon.service.CountedWordsService;
 
 import java.util.List;
 
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AmazonReviewController {
     @Autowired
     private AmazonReviewService amazonReviewService;
+
+    @Autowired
+    private CountedWordsService countedWordsService;
 
     @GetMapping("/users")
     public List<AmazonBestUsersEntity> getBestUsers(
@@ -43,6 +47,7 @@ public class AmazonReviewController {
     public List<WordCommentCountDto> getPopularWords(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "limit", required = false, defaultValue = "50") int limit) {
-        return amazonReviewService.getPopularWordsFromComment(page, limit);
+        return countedWordsService.getMostPopularCommentsWord(PageRequest
+        .of(page, limit));
     }
 }
