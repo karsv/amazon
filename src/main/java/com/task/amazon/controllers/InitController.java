@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,6 +26,7 @@ public class InitController {
     private final UrlFileGetter urlFileGetter;
     private final UserService userService;
     private final AmazonReviewService amazonReviewService;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${data.path}")
     private String dataPath;
@@ -37,13 +39,15 @@ public class InitController {
                           UrlFileGetter urlFileGetter,
                           CsvReaderService csvReader, RoleService roleService,
                           UserService userService,
-                          AmazonReviewService amazonReviewService) {
+                          AmazonReviewService amazonReviewService,
+                          PasswordEncoder passwordEncoder) {
         this.amazonEntityRepository = amazonEntityRepository;
         this.urlFileGetter = urlFileGetter;
         this.csvReader = csvReader;
         this.roleService = roleService;
         this.userService = userService;
         this.amazonReviewService = amazonReviewService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -68,7 +72,7 @@ public class InitController {
 
         User admin = new User();
         admin.setEmail("admin@admin.com");
-        admin.setPassword("123");
+        admin.setPassword(passwordEncoder.encode("123"));
         admin.setRoles(adminRole);
         userService.add(admin);
     }

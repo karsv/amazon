@@ -6,8 +6,8 @@ import com.task.amazon.entities.AmazonMostCommentedProduct;
 import com.task.amazon.service.AmazonReviewService;
 import com.task.amazon.service.CountedWordsService;
 
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/amazon")
+@ApiOperation(value = "amazonReview")
 public class AmazonReviewController {
     @Autowired
     private AmazonReviewService amazonReviewService;
@@ -48,6 +49,6 @@ public class AmazonReviewController {
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "limit", required = false, defaultValue = "50") int limit) {
         return countedWordsService.getMostPopularCommentsWord(PageRequest
-        .of(page, limit));
+                .of(page, limit));
     }
 }
