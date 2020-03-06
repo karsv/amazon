@@ -18,6 +18,7 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
+                .antMatchers("/amazon/users", "/amazon/products").permitAll()
                 .antMatchers("/amazon/words").hasRole("ADMIN")
                 .and()
                 .formLogin()
