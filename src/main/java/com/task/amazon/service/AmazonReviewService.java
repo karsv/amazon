@@ -16,4 +16,6 @@ public interface AmazonReviewService {
     List<AmazonMostCommentedProduct> findMostCommentProducts(PageRequest pageRequest);
 
     List<AmazonBestUsersEntity> findActiveUsers(PageRequest pageRequest);
+
+    void countWordsInComments();
 }

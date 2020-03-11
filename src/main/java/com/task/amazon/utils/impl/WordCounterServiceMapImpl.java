@@ -42,7 +42,7 @@ public class WordCounterServiceMapImpl implements WordCounterService {
                 .map(word -> {
                     WordCommentCountDto wordCommentCountDto = new WordCommentCountDto();
                     wordCommentCountDto.setWord(word.getKey());
-                    wordCommentCountDto.setCount(word.getValue());
+                    wordCommentCountDto.setCount(Long.valueOf(word.getValue()));
                     return wordCommentCountDto;
                 })
                 .collect(Collectors.toList());

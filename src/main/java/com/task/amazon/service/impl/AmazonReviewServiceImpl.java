@@ -3,12 +3,15 @@ package com.task.amazon.service.impl;
 import com.task.amazon.dto.WordCommentCountDto;
 import com.task.amazon.entities.AmazonBestUsersEntity;
 import com.task.amazon.entities.AmazonMostCommentedProduct;
+import com.task.amazon.entities.WordCountEntity;
 import com.task.amazon.repository.AmazonEntityRepository;
+import com.task.amazon.repository.WordCountRepository;
 import com.task.amazon.service.AmazonReviewService;
 import com.task.amazon.utils.WordCounterService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -19,10 +22,14 @@ public class AmazonReviewServiceImpl implements AmazonReviewService {
 
     private final WordCounterService wordCounterService;
 
+    private final WordCountRepository wordCountRepository;
+
     public AmazonReviewServiceImpl(AmazonEntityRepository amazonEntityRepository,
-                                   WordCounterService wordCounterService) {
+                                   WordCounterService wordCounterService,
+                                   WordCountRepository wordCountRepository) {
         this.amazonEntityRepository = amazonEntityRepository;
         this.wordCounterService = wordCounterService;
+        this.wordCountRepository = wordCountRepository;
     }
 
     @Override
@@ -40,6 +47,22 @@ public class AmazonReviewServiceImpl implements AmazonReviewService {
     @Override
     public List<AmazonBestUsersEntity> findActiveUsers(PageRequest pageRequest) {
         return amazonEntityRepository.findActiveUsers(pageRequest);
+    }
+
+    @Override
+    public void countWordsInComments() {
+        List<WordCountEntity> list = wordCounterService
+                .countWordsInString(amazonEntityRepository
+                        .getAllComments())
+                .stream()
+                .map(w -> {
+                    WordCountEntity wordCountEntity = new WordCountEntity();
+                    wordCountEntity.setWord(w.getWord());
+                    wordCountEntity.setNumber(Long.valueOf(w.getCount()));
+                    return wordCountEntity;
+                })
+                .collect(Collectors.toList());
+        wordCountRepository.saveAll(list);
     }
 
     private <T> List<T> getPage(List<T> sourceList, int page, int pageSize) {
