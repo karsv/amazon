@@ -19,5 +19,9 @@ before_install:
 services:
   - postgresql
 
+before_script:
+  - psql -c 'create database amazon;' -U postgres
+
 script:
+  - psql -c "SELECT version();"
   - mvn clean install
