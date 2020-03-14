@@ -1,7 +1,6 @@
 package com.task.amazon.security;
 
 import com.task.amazon.utils.impl.JwtTokenUtil;
-
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import java.io.IOException;

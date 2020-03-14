@@ -8,11 +8,9 @@ import com.task.amazon.repository.AmazonEntityRepository;
 import com.task.amazon.repository.WordCountRepository;
 import com.task.amazon.service.AmazonReviewService;
 import com.task.amazon.utils.WordCounterService;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 

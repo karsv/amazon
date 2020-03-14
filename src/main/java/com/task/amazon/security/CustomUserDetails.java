@@ -3,10 +3,8 @@ package com.task.amazon.security;
 import com.task.amazon.entities.Role;
 import com.task.amazon.entities.User;
 import com.task.amazon.service.UserService;
-
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -3,13 +3,11 @@ package com.task.amazon.utils.impl;
 import com.task.amazon.dto.WordCommentCountDto;
 import com.task.amazon.entities.AmazonProductComments;
 import com.task.amazon.utils.WordCounterService;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 
 @Service

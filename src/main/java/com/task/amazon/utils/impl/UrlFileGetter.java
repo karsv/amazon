@@ -1,14 +1,12 @@
 package com.task.amazon.utils.impl;
 
 import com.task.amazon.exceptions.DataProcessingException;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
-
 import org.springframework.stereotype.Service;
 
 @Service
