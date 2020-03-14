@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "entities")
+@Table(name = "amazon_reviews")
 public class AmazonReviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
