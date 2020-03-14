@@ -20,7 +20,7 @@ services:
   - postgresql
 
 before_script:
- - cp config/database.yml.travis config/database.yml
+ - cp database.yml
 
 script:
   - psql -c "SELECT version();"
