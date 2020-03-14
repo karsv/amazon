@@ -19,13 +19,5 @@ before_install:
 services:
   - postgresql
 
-#before_script:
-#  - psql -c 'create database amazon;' -U postgres
-
 script:
-  - psql -c "SELECT version();"
-
-env:
-  global:
-    - PGUSER=postgres
-    - PGPORT=5432
+  - mvn clean install
