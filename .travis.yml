@@ -4,10 +4,6 @@ jdk:
 dist: xenial
 sudo: required
 
-script:
-  - psql -c "SELECT version();"
-  - mvn clean install
-
 cache:
   directories:
   - $HOME/.m2
@@ -25,6 +21,9 @@ services:
 
 before_script:
   - psql -c 'create database amazon;' -U postgres
+
+script:
+  - psql -c "SELECT version();"
 
 env:
   global:
