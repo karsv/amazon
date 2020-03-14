@@ -1,7 +1,7 @@
 language: java
 jdk:
   - openjdk11
-dist: xenial
+dist: trusty
 sudo: required
 
 cache:
@@ -20,7 +20,13 @@ services:
   - postgresql
 
 before_script:
-  - sudo psql 'CREATE DATABASE amazon;' -U postgres
+  - sudo psql -c 'CREATE DATABASE amazon;' -U postgres
 
 script:
   - mvn clean install
+
+env:
+  global:
+    - NODE_ENV=test
+    - PGPORT=5433
+    - PGHOST=localhost
