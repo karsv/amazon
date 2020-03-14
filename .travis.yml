@@ -20,7 +20,7 @@ services:
   - postgresql
 
 before_script:
-  - psql 'CREATE DATABASE amazon;' -U postgres
+  - sudo psql 'CREATE DATABASE amazon;' -U postgres
 
 script:
   - mvn clean install
