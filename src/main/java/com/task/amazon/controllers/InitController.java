@@ -11,9 +11,7 @@ import com.task.amazon.utils.impl.UrlFileGetter;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
