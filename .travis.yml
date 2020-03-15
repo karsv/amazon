@@ -24,9 +24,3 @@ before_script:
 
 script:
   - mvn clean install
-
-env:
-  global:
-    - NODE_ENV=test
-    - PGPORT=5433
-    - PGHOST=localhost
