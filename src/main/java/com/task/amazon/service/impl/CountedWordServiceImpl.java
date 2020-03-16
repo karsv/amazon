@@ -3,10 +3,8 @@ package com.task.amazon.service.impl;
 import com.task.amazon.dto.WordCommentCountDto;
 import com.task.amazon.repository.WordCountRepository;
 import com.task.amazon.service.CountedWordsService;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

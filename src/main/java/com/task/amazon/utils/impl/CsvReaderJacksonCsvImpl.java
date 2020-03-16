@@ -8,12 +8,10 @@ import com.task.amazon.entities.AmazonReviewEntity;
 import com.task.amazon.entities.PojoAmazonReviewEntity;
 import com.task.amazon.exceptions.DataProcessingException;
 import com.task.amazon.utils.CsvReaderService;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 
 @Service

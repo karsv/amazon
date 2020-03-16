@@ -5,7 +5,6 @@ import com.task.amazon.entities.AmazonBestUsersEntity;
 import com.task.amazon.entities.AmazonMostCommentedProduct;
 import com.task.amazon.service.AmazonReviewService;
 import com.task.amazon.service.CountedWordsService;
-
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

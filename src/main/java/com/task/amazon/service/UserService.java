@@ -1,7 +1,6 @@
 package com.task.amazon.service;
 
 import com.task.amazon.entities.User;
-
 import java.util.Optional;
 
 public interface UserService {

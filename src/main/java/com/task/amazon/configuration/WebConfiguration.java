@@ -2,7 +2,6 @@ package com.task.amazon.configuration;
 
 import com.task.amazon.security.JwtAuthenticationEntryPoint;
 import com.task.amazon.security.JwtRequestFilter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
