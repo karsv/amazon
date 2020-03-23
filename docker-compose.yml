@@ -1,0 +1,36 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    network_mode: bridge
+    container_name: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+      - 5435
+    ports:
+      - 5435:5435
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=amazon
+      - POSTGRES_HOST=postgres
+      - PGDATA=/var/lib/postgresql/data
+    restart: unless-stopped
+  # APP*****************************************
+  amazon:
+    image: amazon:latest
+    network_mode: bridge
+    container_name: amazon
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
+volumes:
+  postgres-data:
