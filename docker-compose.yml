@@ -28,6 +28,3 @@ services:
       - postgres
     links:
       - postgres
-
-volumes:
-  postgres-data:
